@@ -183,10 +183,10 @@ bool CalculateScore(GameState gameState, char move, int& result)
 		result = static_cast<decltype(+result)>(Scores::Win) + s_OpCodeMap.find(move)->second + 1;
 		break;
 	case LOSE:
-		result = static_cast<decltype(+result)>(Scores::Win) + s_OpCodeMap.find(move)->second + 1;
+		result = static_cast<decltype(+result)>(Scores::Lose) + s_OpCodeMap.find(move)->second + 1;
 		break;
 	case TIE:
-		result = static_cast<decltype(+result)>(Scores::Win) + s_OpCodeMap.find(move)->second + 1;
+		result = static_cast<decltype(+result)>(Scores::Tie) + s_OpCodeMap.find(move)->second + 1;
 		break;
 	default:
 		DEBUGPRINT("INVALID GAME STATE");
