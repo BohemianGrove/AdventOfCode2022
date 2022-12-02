@@ -77,6 +77,7 @@ bool ComputeDay1P1()
 	return true;
 }
 
+//Computes Day 1, Part 2 answer.
 bool ComputeDay1P2()
 {
 	const int ElfCount = 3; //How many elves we're summing
