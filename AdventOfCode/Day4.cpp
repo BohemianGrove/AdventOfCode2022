@@ -1,5 +1,64 @@
 #include "Day4.h"
 
+struct TaskRange
+{
+	int Start;
+	int End;
+};
+
+bool CompareTaskRangeAny(TaskRange a, TaskRange b, bool& overlapping)
+{
+	//Check if the ranges overlap at all
+	overlapping = (a.Start <= b.End && b.Start <= a.End) || (b.Start <= a.End && a.Start <= b.End);
+
+	return true;
+}
+
+bool CompareTaskRange(TaskRange a, TaskRange b, bool &overlapping)
+{
+	overlapping = (a.Start <= b.Start && a.End >= b.End) || (b.Start <= a.Start && b.End >= a.End);
+	
+	return true;
+}
+
+bool StringToTask(std::string input, TaskRange &TaskLeft, TaskRange &TaskRight)
+{
+	//Split a string on comma
+	std::string left;
+	std::string right;
+	std::string::size_type comma = input.find(',');
+	if (comma == std::string::npos)
+	{
+		DEBUGPRINT("Invalid input string");
+		return false;
+	}
+	left = input.substr(0, comma);
+	right = input.substr(comma + 1);
+	
+	//Split the strings, in the format START-END into the TASKRANGE struct
+	std::string::size_type dash = left.find('-');
+	if (dash == std::string::npos)
+	{
+		DEBUGPRINT("Invalid input string");
+		return false;
+	}
+	TaskLeft.Start = std::stoi(left.substr(0, dash));
+	TaskLeft.End = std::stoi(left.substr(dash + 1));
+	
+	dash = right.find('-');
+	if (dash == std::string::npos)
+	{
+		DEBUGPRINT("Invalid input string");
+		return false;
+	}
+	TaskRight.Start = std::stoi(right.substr(0, dash));
+	TaskRight.End = std::stoi(right.substr(dash + 1));
+	
+	return true;
+
+}
+
+
 bool ReadFileDay4P1(std::string FileName, std::vector<std::string>& inputs)
 {
 	//Read all lines from the file
@@ -15,10 +74,12 @@ bool ReadFileDay4P1(std::string FileName, std::vector<std::string>& inputs)
 	{
 		inputs.push_back(line);
 	}
+
 	return true;
 }
 
-bool ComputeDay4P1()
+
+bool ComputeDay4()
 {
 	std::vector<std::string> inputs;
 	if (!ReadFileDay4P1("Day4.txt", inputs))
@@ -26,27 +87,46 @@ bool ComputeDay4P1()
 		DEBUGPRINT("Failed to read file");
 		return false;
 	}
-	return false;
-}
 
-bool ComputeDay4P2()
-{
-	return false;
-}
+	int overlapCount = 0;
+	int overlapCountAny = 0;
 
-bool ComputeDay4()
-{
-	if (!ComputeDay4P1())
+	//Loop through all the inputs
+	for (auto& str : inputs)
 	{
-		DEBUGPRINT("Failed to compute Day 4 Part 1");
-		return false;
+		TaskRange TaskLeft;
+		TaskRange TaskRight;
+		if (!StringToTask(str, TaskLeft, TaskRight))
+		{
+			DEBUGPRINT("Failed to convert string to task");
+			return false;
+		}
+		bool overlapping = false;
+		if (!CompareTaskRange(TaskLeft, TaskRight, overlapping))
+		{
+			DEBUGPRINT("Failed to compare tasks");
+			return false;
+		}
+
+		if (overlapping)
+		{
+			overlapCount++;
+		}
+
+		if (!CompareTaskRangeAny(TaskLeft, TaskRight, overlapping))
+		{
+			DEBUGPRINT("Failed to compare tasks");
+			return false;
+		}
+
+		if (overlapping)
+		{
+			overlapCountAny++;
+		}
 	}
-	
-	if (!ComputeDay4P2())
-	{
-		DEBUGPRINT("Failed to compute Day 4 Part 2");
-		return false;
-	}
-	
+
+	std::cout << "Day 4 Part 1: " << overlapCount << std::endl;
+	std::cout << "Day 4 Part 2: " << overlapCountAny << std::endl;
+
 	return true;
 }

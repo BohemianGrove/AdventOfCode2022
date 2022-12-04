@@ -21,7 +21,7 @@ bool FindShared(std::vector<std::string> input, char &similar)
 	
 	int i = 0;
 
-	for (auto str : input)
+	for (auto& str : input)
 	{
 		for (auto c : str)
 		{
@@ -34,7 +34,7 @@ bool FindShared(std::vector<std::string> input, char &similar)
 	auto it = characters | std::views::keys | std::views::filter([characters, match](char n) {return (characters.at(n) & match) == match; });
 
 	int size = 0;
-	for (auto i : it)
+	for (auto& i : it)
 	{
 		if (size++ > 0)
 		{
@@ -59,18 +59,18 @@ bool FindShared(std::string InLeft, std::string InRight, char& similar)
 	std::unordered_map<char, int> characters;
 
 	//We can find the unique value by checking if it's odd and != 1, as we add 2 everytime it appears in right, and it will have 1 if found in left.
-	for (auto c : InLeft)
+	for (auto& c : InLeft)
 	{
 		characters[c] = 1;
 	}
 
-	for (auto c : InRight)
+	for (auto& c : InRight)
 	{
 		characters[c] += 2;
 	}
 
 	int found = 0;
-	for (auto i : characters)
+	for (auto& i : characters)
 	{
 		if (found > 1)
 		{
@@ -87,7 +87,7 @@ bool FindShared(std::string InLeft, std::string InRight, char& similar)
 	auto it = characters | std::views::keys | std::views::filter([characters](char n) {return characters.at(n) % 2 == 1 && characters.at(n) != 1; });
 
 	int size = 0;
-	for (auto i : it)
+	for (auto& i : it)
 	{
 		if (size++ > 0)
 		{
@@ -252,7 +252,7 @@ bool ComputeDay3P1()
 	}	
 	
 	uint64_t sum = 0;
-	for (auto i : hits)
+	for (auto& i : hits)
 	{
 		//We can calculate the score by the position in the alphabet. Uppercase characters start from 27, so 'z' - 'a' + 1
 		if (islower(i))

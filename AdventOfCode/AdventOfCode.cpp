@@ -18,6 +18,11 @@ int main()
 	{
 		DEBUGPRINT("FAILED TO COMPUTE DAY 3");
 	}
+
+	if (!ComputeDay4())
+	{
+		DEBUGPRINT("FAILED TO COMPUTE DAY 4");
+	}
 	
 	return 0;
 }
