@@ -18,10 +18,11 @@ bool ReadFileD1P1(std::string fileName, std::vector<std::vector<uint64_t>> &resu
 	size_t i = 0; //Elf index
 	while (std::getline(file, line))
 	{
+		if (i >= result.size() - 1)
+			result.resize(result.size() * 2);
+
 		if (line.empty())
 		{
-			if (i >= result.size() - 1)
-				result.resize(result.size() * 2);
 			i++;
 			continue;
 		}

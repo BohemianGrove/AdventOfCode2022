@@ -13,6 +13,11 @@ int main()
 	{
 		DEBUGPRINT("FAILED TO COMPUTE DAY 2");
 	}
+
+	if (!ComputeDay3())
+	{
+		DEBUGPRINT("FAILED TO COMPUTE DAY 3");
+	}
 	
 	return 0;
 }
